@@ -1,0 +1,12 @@
+main:
+	irmovq $1,%rdx
+	subq %rsi,%rdi
+	jge osamaara
+	jmp lopetus
+	
+osamaara:
+	addq %rdx,%rax
+    jmp main
+    
+lopetus:
+	halt

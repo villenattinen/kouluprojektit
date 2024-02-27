@@ -1,0 +1,57 @@
+@startuml
+package oy.tol.tra {
+  interface LinkedListInterface<E> {
+    +add(element: E) : void 
+    +add(index : int, element: E) : void
+    +remove(E element) : boolean
+    +remove(int index) : E
+    +get(int index) : E
+    +indexOf(element : E) : int
+    +size() : int
+    +reset() : void
+    +reverse() : void
+  }
+  class ListFactory {
+    +<color:Red>{static}createStringLinkedList() : LinkedListInterface<String></color>
+  }
+  class LinkedListImplementation<E> {
+    -size : int
+  }
+  class LinkedListImplementation implements LinkedListInterface
+
+  class LinkedListImplementation #pink;line:red
+  note left of LinkedListImplementation 
+    You must implement this linked list class,
+    and the ListFactory.createStringLinkedList() method.
+  end note 
+
+  class Node<T> {
+    element: T
+    +toString() : String
+  }
+  LinkedListImplementation *- "1" Node : head
+  together {
+    <> diamond
+    diamond - "0" Node
+    diamond - "1 next" Node
+  }
+
+  ListFactory ..> LinkedListImplementation : instantiates
+
+  LinkedListAllocationException --|> java.lang.Exception
+
+  LinkedListImplementation ..> java.lang.NullPointerException : throws
+  LinkedListImplementation ..> java.lang.IndexOutOfBoundsException : throws
+  LinkedListImplementation ..> LinkedListAllocationException : throws
+
+  ListTests ..> LinkedListImplementation : tests
+  ReorderListTests ..> LinkedListImplementation : tests
+  note top of ReorderListTests  
+    Tests the implementation of reverse() method.
+  end note
+}
+package java.lang {
+  IndexOutOfBoundsException --|> Exception
+  NullPointerException --|> Exception
+}
+@enduml

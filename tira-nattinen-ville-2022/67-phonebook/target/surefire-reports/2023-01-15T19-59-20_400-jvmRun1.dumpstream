@@ -1,0 +1,35 @@
+# Created at 2023-01-15T19:59:26.064
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+
+
+# Created at 2023-01-15T19:59:29.723
+Unexpected IOException with stream: Hash table reallocated 12 times
+Hash table fill factor was 0.8
+Hash table fill rate is 76,29%
+Hash table had 14620854 collisions when filling the hash table
+Hash table had to probe 238 times in the worst case
+
+
+
+# Created at 2023-01-15T19:59:29.723
+Unexpected IOException with stream: ==> Starting to analyse Hashtable phonebook large-city.txt
+
+
+# Created at 2023-01-15T20:00:04.135
+Unexpected IOException with stream: Hash table reallocated 15 times
+Hash table fill factor was 0.8
+Hash table fill rate is 47,68%
+Hash table had 57516479 collisions when filling the hash table
+Hash table had to probe 46341 times in the worst case
+
+
+
+# Created at 2023-01-15T20:00:04.143
+Unexpected IOException with stream: ==> Starting to analyse Hashtable phonebook metropolis.txt
+
+

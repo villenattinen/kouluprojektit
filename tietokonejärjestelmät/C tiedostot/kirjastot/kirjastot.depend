@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1633864555 source:c:\users\35844\desktop\tietokonejärjestelmät\c tiedostot\kirjastot\main.c
+	<time.h>
+	<inttypes.h>
+	<stdio.h>
+	<limits.h>
+

@@ -1,0 +1,26 @@
+main:
+    irmovq $1,%rsi
+    irmovq $8,%r8
+    jmp yhteenlasku
+
+.pos 0x100
+yhteenlasku:
+	mrmovq (%rsp),%rdi  # osoittimen arvo rekisteriin
+	addq %rdi,%rdx      # rdx = rdx + rdi
+	addq %rdi,%rdi
+	je jakolasku
+	addq %rsi,%r9       # ++r9
+	addq %r8,%rsp       # osoitin 8 tavua ylöspäin
+	jmp yhteenlasku     
+	
+jakolasku:
+	subq %r9,%rdx       # rdx = rdx-r9
+	jge osamaara        # rax >= 0
+	jmp lopetus
+	
+osamaara:
+	addq %rsi,%rax      # rax = rax + rsi
+    jmp jakolasku
+
+lopetus:
+    halt

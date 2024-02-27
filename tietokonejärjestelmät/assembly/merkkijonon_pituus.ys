@@ -1,0 +1,22 @@
+main:
+   irmovq pino,%rsp      # pino-osoitin
+   irmovq pino,%rbp      # pinon alkuosoite
+   irmovq $1,%rsi
+   irmovq $8,%r8
+   call kahlaus
+
+.pos 0x200
+kahlaus:
+	addq %r8,%rsp
+	mrmovq (%rsp),%rdi
+	subq %rsi,%rdi
+    jge lisays
+    halt
+
+.pos 0x300	
+lisays:
+    addq %rsi,%rax
+    jmp kahlaus
+
+.pos 0x400
+pino:

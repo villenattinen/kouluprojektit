@@ -1,0 +1,126 @@
+# Created at 2023-01-15T20:02:28.966
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+
+
+# Created at 2023-01-15T20:02:34.537
+Unexpected IOException with stream: Hash table reallocated 16 times
+Hash table fill factor was 0.8
+Hash table fill rate is 47,68%
+Hash table had 7628332 collisions when filling the hash table
+Hash table had to probe 34 times in the worst case
+
+
+
+# Created at 2023-01-15T20:02:34.581
+Unexpected IOException with stream: ==> Starting to analyse Hashtable phonebook capital.txt
+
+
+# Created at 2023-01-15T20:02:46.279
+Unexpected IOException with stream: Hash table reallocated 17 times
+Hash table fill factor was 0.8
+Hash table fill rate is 47,68%
+Hash table had 15264485 collisions when filling the hash table
+Hash table had to probe 34 times in the worst case
+
+
+
+# Created at 2023-01-15T20:02:46.279
+Unexpected IOException with stream: ==> Starting to analyse Hashtable phonebook megalopolis.txt
+
+
+# Created at 2023-01-15T20:03:17.806
+Unexpected IOException with stream: Hash table reallocated 18 times
+Hash table fill factor was 0.8
+Hash table fill rate is 59,60%
+Hash table had 47690522 collisions when filling the hash table
+Hash table had to probe 42 times in the worst case
+
+
+
+# Created at 2023-01-15T20:03:17.823
+Unexpected IOException: 6,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithHashTable,null,null,null
+
+
+# Created at 2023-01-15T20:03:17.824
+Unexpected IOException: 5,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithBST,null,null,null
+
+
+# Created at 2023-01-15T20:03:17.826
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook village.txt
+
+
+# Created at 2023-01-15T20:03:17.841
+Unexpected IOException with stream: Binary search tree has a max depth of 13
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T20:03:17.844
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook small-town.txt
+
+
+# Created at 2023-01-15T20:03:17.849
+Unexpected IOException with stream: Binary search tree has a max depth of 20
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T20:03:17.849
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook town.txt
+
+
+# Created at 2023-01-15T20:03:17.868
+Unexpected IOException with stream: Binary search tree has a max depth of 31
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T20:03:17.869
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook large-town.txt
+
+
+# Created at 2023-01-15T20:03:18.027
+Unexpected IOException with stream: Binary search tree has a max depth of 42
+Binary search tree's longest collision chain was 1
+
+
+
+# Created at 2023-01-15T20:03:18.029
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook city.txt
+
+
+# Created at 2023-01-15T20:03:18.304
+Unexpected IOException with stream: Binary search tree has a max depth of 41
+Binary search tree's longest collision chain was 2
+
+
+
+# Created at 2023-01-15T20:03:18.307
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook large-city.txt
+
+
+# Created at 2023-01-15T20:03:19.951
+Unexpected IOException with stream: Binary search tree has a max depth of 46
+Binary search tree's longest collision chain was 1
+
+
+
+# Created at 2023-01-15T20:03:19.952
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook metropolis.txt
+
+
+# Created at 2023-01-15T20:03:22.447
+Unexpected IOException with stream: Binary search tree has a max depth of 52
+Binary search tree's longest collision chain was 2
+
+
+
+# Created at 2023-01-15T20:03:22.448
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook capital.txt
+
+

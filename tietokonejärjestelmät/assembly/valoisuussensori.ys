@@ -1,0 +1,72 @@
+main:
+    irmovq pino,%rbp    			# pinon alkuosoite 
+    irmovq pino,%rsp    			# pinon ylimmän muistipaikan osoite 
+    rrmovq %r13,%rax  				# muutettava luku raxiin
+    irmovq 0x1000,%rbx				# 4096 rbx:ään
+    irmovq $8,%r8   				# kasi
+    irmovq $17,%r9                  # loopin laskuri
+    irmovq $1,%r11					# yksi
+    pushq %r11                      # 16^0
+    irmovq 0x10,%rdx                 
+    pushq %rdx                      # 16^1 pinoon
+    irmovq 0x100,%rdx                
+    pushq %rdx                      # 16^2 pinoon              
+    pushq %rbx                      # 16^3 pinoon
+    irmovq 0x10000,%rdx
+    pushq %rdx                      # 16^4 pinoon
+    irmovq 0x100000,%rdx 
+    pushq %rdx                      # 16^5 pinoon
+    irmovq 0x1000000,%rdx            
+    pushq %rdx                      # 16^6 pinoon
+    irmovq 0x10000000,%rdx           
+    pushq %rdx                      # 16^7 pinoon
+    irmovq 0x100000000,%rdx          
+    pushq %rdx                      # 16^8 pinoon
+    irmovq 0x1000000000,%rdx         
+    pushq %rdx                      # 16^9 pinoon
+    irmovq 0x10000000000,%rdx        
+    pushq %rdx                      # 16^10 pinoon
+    irmovq 0x100000000000,%rdx       
+    pushq %rdx                      # 16^11 pinoon
+    irmovq 0x1000000000000,%rdx      
+    pushq %rdx                      # 16^12 pinoon
+    irmovq 0x10000000000000,%rdx     
+    pushq %rdx                      # 16^13 pinoon
+    irmovq 0x100000000000000,%rdx    
+    pushq %rdx                      # 16^14 pinoon
+    irmovq 0x1000000000000000,%rdx   
+    pushq %rdx                      # 16^15 pinoon
+    call loop
+    halt
+
+loop:
+    addq %r8,%rsp                   # pino-osoitin yksi ylös
+    rrmovq %rax,%rcx                # kopioidaan rax rcx:ään
+    subq %r11,%r9                   # vähennetään loopista ykis (i--)
+    jne lasku                       # hypätään laskuun, jos kierroksia jäljellä
+    subq %r8,%rsp                   # pino-osoitin kaksi alas
+    subq %r8,%rsp   
+    ret                             # paluu mainiin
+    
+lasku:
+    mrmovq (%rsp),%rdx				# pino-osoittimen arvo rdx:ään
+    subq %rdx,%rcx					# verrataan rdx:ää rcx:ään
+    cmovge %rcx,%rax				# jos suurempi tai yhtä suuri siirretään rcx rax:iin
+    jge sijoitus					# ja hypätään sijoitukseen
+    jmp loop						# muuten palataan looppiin
+
+sijoitus:
+    mrmovq 24(%rsp),%rdx			# osoittimen arvosta kolme ylös päin rdx:ään
+    addq %rdx,%r14					# lisätään rdx r14
+    mrmovq (%rsp),%rdx				# osoittimen arvo rdx:ään
+    subq %rbx,%rdx					# verrataan rdx:ää rbx:ään
+    jl sijoituskaks					# jos alle nolle hypätään sijoituskakkoseen
+    jmp lasku						# muuten palataan laskuun
+
+sijoituskaks:
+    mrmovq (%rsp),%rdx				# otetaan osoittimen arvo
+    addq %rdx,%r13					# lisätään rdx r13
+    jmp lasku						# palataan laskuun
+
+.pos 0x400
+pino:

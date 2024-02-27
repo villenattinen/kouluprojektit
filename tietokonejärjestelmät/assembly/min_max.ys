@@ -1,0 +1,23 @@
+main:
+    irmovq $8,%r8
+    mrmovq (%rsp),%rax  # osoittimen arvo rekisteriin
+	rrmovq %rax,%rdi
+	rrmovq %rax,%rsi
+    jmp haku
+
+.pos 0x100
+haku:
+    addq %r8,%rsp
+    mrmovq (%rsp),%rax  # osoittimen arvo rekisteriin
+    andq %rax,%rax      # rax = rax & rax
+    je lopetus          # if rax == 0, jump to lopetus
+    rrmovq %rdi,%rdx    # rdx = rdi
+    rrmovq %rsi,%r9     # r9 = rsi
+	subq %rax,%rdx      # rdx = rdx - rax
+	cmovle %rax,%rdi    # if rdx <= 0, rdi = rax
+	subq %rax,%r9       # r9 = r9 - rax
+	cmovge %rax,%rsi    # if r9 >= 0, rsi = rax
+    jmp haku
+
+lopetus:
+    halt

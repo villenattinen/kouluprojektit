@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1632853240 source:c:\users\35844\desktop\tietokonejärjestelmät\c tiedostot\ohjausrakenteet\main.c
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+

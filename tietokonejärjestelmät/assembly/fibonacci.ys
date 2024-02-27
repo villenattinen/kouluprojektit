@@ -1,0 +1,312 @@
+#  
+# TKJ-harjoitustyö 2021 Fibonacci
+# Ville Nättinen
+
+# Tästä alkaa palautettava koodi
+main:
+    irmovq luvut,%r10               # muistipaikka 0x800, tallennetaan 
+                                    # tarkisteltavan luvun muutokset 
+                                    # (5*x*x+4 ja 5*x*x-4)
+    irmovq pino,%rbp                # pinon alkuosoite 
+    irmovq pino,%rsp                # pinon ylimmän muistipaikan osoite 
+    irmovq $1,%r9                   # vakio yksi
+    irmovq $8,%r8                   # vakio kahdeksan
+    irmovq $22,%rsi                 # bittien lkm, laskin kertolaskulle   
+    irmovq 0x1,%rdx                  
+    pushq %rdx                      # 2^0 pinoon
+    irmovq 0x2,%rdx                 
+    pushq %rdx                      # 2^1 pinoon
+    irmovq 0x4,%rdx                 
+    pushq %rdx                      # 2^2 pinoon
+    irmovq 0x8,%rdx                 
+    pushq %rdx                      # 2^3 pinoon
+    irmovq 0x10,%rdx                 
+    pushq %rdx                      # 2^4 pinoon
+    irmovq 0x20,%rdx                 
+    pushq %rdx                      # 2^5 pinoon
+    irmovq 0x40,%rdx                 
+    pushq %rdx                      # 2^6 pinoon
+    irmovq 0x80,%rdx                 
+    pushq %rdx                      # 2^7 pinoon
+    irmovq 0x100,%rdx                 
+    pushq %rdx                      # 2^8 pinoon
+    irmovq 0x200,%rdx                 
+    pushq %rdx                      # 2^9 pinoon
+    irmovq 0x400,%rdx                 
+    pushq %rdx                      # 2^10 pinoon
+    irmovq 0x800,%rdx                 
+    pushq %rdx                      # 2^11 pinoon
+    irmovq 0x1000,%rdx                
+    pushq %rdx                      # 2^12 pinoon
+    irmovq 0x2000,%rdx                
+    pushq %rdx                      # 2^13 pinoon
+    irmovq 0x4000,%rdx               
+    pushq %rdx                      # 2^14 pinoon
+    irmovq 0x8000,%rdx               
+    pushq %rdx                      # 2^15 pinoon
+    irmovq 0x10000,%rdx
+    pushq %rdx                      # 2^16 pinoon
+    irmovq 0x20000,%rdx
+    pushq %rdx                      # 2^17 pinoon
+    irmovq 0x40000,%rdx
+    pushq %rdx                      # 2^18 pinoon
+    irmovq 0x80000,%rdx
+    pushq %rdx                      # 2^19 pinoon
+    irmovq 0x100000,%rdx
+    pushq %rdx                      # 2^20 pinoon
+    irmovq 0x200000,%rdx
+    pushq %rdx                      # 2^21 pinoon
+    irmovq 0x400000,%rdx
+    pushq %rdx                      # 2^22 pinoon, suurin vaadittava bitti, kun
+                                    # tarkasteltavat luvut ovat välillä 0-1000
+    call init                       # hypätään ensimmäiseen aliohjelmaan
+    halt                            # pysäytys, palataan kun luvut loppuvat tai
+                                    # löytyy ei-fibonaccin luku
+
+# Varsinaisen ohjelman "alustus"
+# Siirretään ensin osoitin suurimman bitin kohdalle, sen jälkeen otetaan 
+# muistista ensimmäinen tarkasteltava luku rekisteriin r13 ja kopioidaan se
+# rekisteriin r12 kertomista varten
+# Siirretään vakio 4 rekisteriin r14 myöhempää plus/miinus -laskua varten ja
+# varmistamaan kertolaskun siirtyminen suoraan neliöjuuren ensimmäisellä
+# iteraatiolla
+init:                              
+    addq %r8,%rsp           # osoitinta yksi ylös
+    mrmovq (%r11),%r13      # kerrottava luku muistista rekisteriin
+    rrmovq %r13,%r12        # kopioidaan sama luku kertolaskua varten
+    irmovq $4,%r14          # vakio 4 rekisteriin r14
+    jmp mltply_init         # hypätään kertolaskuun
+
+# Kertolaskun aliohjelmat (mltply_init, mltply ja addition)
+# Haetaan pinosta kertojan MSB ja määritetään sen mukaan laskimen arvo, eli 
+# kierrosten lukumäärä, joka on sama kuin bittien siirron määrä vasemmalle
+# Kertoja ja kerrottava ovat sama luku, rekistereissä r12 ja r13
+mltply_init:
+    rrmovq %r12,%rbx        # kopioidaan luku rekisteriin rbx
+    mrmovq (%rsp),%rdx      # osoittimen paikalta arvo/bitti
+    subq %rdx,%rbx          # verrataan bittiä lukuun
+    cmovge %r13,%rcx        # jos suurempi tai yhtäsuuri, niin siirretään 
+                            # r13:n luku rcx:ään
+    cmovge %rbx,%r12        # jos suurempi tai yhtäsuuri, niin siirretään 
+                            # rbx:n luku r12:een
+    jge mltply              # jos suurempi tai yhtäsuuri, niin siirrytään
+                            # mltply-aliohjelmaan "siirtämään bittejä" 
+                            # alilaskimen (rekisteri rdi) arvon verran 
+    addq %r8,%rsp           # osoitinta yksi ylös
+    rrmovq %rsi,%rdi        # laskin sisempään laskimeen
+    subq %r9,%rsi           # laskin bittien siirtoon, 
+                            # max siirto 22; joka kierros -= 1
+    jge mltply_init         # palataan tämän aliohjelman alkuun, jos laskin ei
+                            # ole mennyt negatiiviseksi
+    irmovq $0,%r13          # tyhjennetään r13, jottei jää jäämiä seuraaviin
+                            # aliohjelmiin
+    andq %r14,%r14          # tarkastetaan, onko r14 tyhjä
+    je compare                # jos on, hypätään reset-aliohjelmaan
+    jmp quint               # jos ei, ollaan vasta määrittämässä tarkasteltavia
+                            # lukuja, jolloin hypätään aliohjelmaan quint
+                            # kertomaan lukua ja lisäämään ja vähentämään
+                            # luvusta vakia r14
+
+# Aliohjelma, joka siirtää luvun bittejä yhdellä per kierros lisäämällä luvun
+# itseensä
+# Muutettava luku kulkee rekisterissä rcx
+# Kun laskin rdi menee nollaan siirrytään lisäämään saatu osatulo
+mltply:
+    subq %r9,%rdi           # sisempi laskin -= 1
+    jle addition            # hypätään lisäämään osatulo kokonaislukuun
+    addq %rcx,%rcx          # lisätään luku itseensä, eli siirretään bittejä
+                            # yhdellä
+    jmp mltply              # palataan uudelle kierrokselle
+
+# Käytetään rax-rekisteriä säilyttämään kertolaskun osatulot  
+addition:
+    addq %rcx,%rax          # lisätään osatulo summaan
+    jmp mltply_init         # palataan kertolaskun pääsilmukkaan
+
+# Kerrotaan luku viidellä lisäämällä lukua itseensä
+# Tallennetaan saatu luku rekisteriin r13, jonka jälkeen luvusta vähennetään
+# neljä ja siihen lisätään neljä
+# Tallennetaan saadut arvor luvut-listaan: isompi arvo ensimmäiseen indeksiin,
+# pienempi arvo toiseen indeksiin
+quint:
+    addq %rax,%r13          # lisätään luku rekisteriin (r13 += x)
+    addq %rax,%rax          # lisätään luku itseensä    (x += x)
+    addq %rax,%rax          # lisätään uusi luku itseensä    (2x += 2x)
+    addq %rax,%r13          # lisätään rekisteri rax rekisteriin r13, jolloin  
+                            # saadaan alkuperäinen luku kerrottuna viidellä 
+                            # (r13 += 4x eli r13 = 5x)
+    rrmovq %r13,%rax        # kopioidaan saatu luku rekisteriin rax, jotta voidaan
+    subq %r14,%rax          # vähentää luvusta neljä
+    rmmovq %rax,8(%r10)     # tallennetaan luvut-listan 2. alkioon
+    rrmovq %r13,%rax        # kopioidaan aiempi luku rekisteriin rax, jotta voidaan
+    addq %r14,%rax          # lisätä lukuun neljä
+    rmmovq %rax,(%r10)      # tallennetaan luvut-listan 1. alkioon
+    rrmovq %rax,%r13        # kopioidaan 1. luku talteen
+    irmovq $1,%rcx          # varmistetaan että rekisterissä rcx on arvo, jotta 
+                            # ptr-aliohjelma siirtyy seuraavaksi neliöjuureen
+    jmp ptr                 # hypätään ptr-aliohjelmaan siirtämään osoitin oikean
+                            # bitin kohdalle
+
+# Neliöjuuren aliohjelmat (sqrt_init, sqrt, res)
+# Siirretään osoitinta aina kaksi eteenpäin, kunnes osoittimen bitti on pienempi
+# tai yhtä suuri kuin haluttu luku. Kun bitti on löytynyt, siirretään osoittimen
+# arvo rekisteriin rcx ensimmäiseksi "res":n arvoksi, luvuksi jää vähennyslaskun 
+# tulos ja osoitin pysyy samassa paikassa, eli neliöjuuren ensimmäinen iteraatio
+# on ikään kuin tapahtunut. Sen jälkeen hypätään aliohjelmaan sqrt laskemaan 
+# tulos, joka on viimeisen iteraation res
+sqrt_init:
+    rrmovq %r13,%rcx        # siirretään uusi luku rekisteriin rcx
+    mrmovq (%rsp),%rdx      # otetaan osoittimen määräämä bitti
+    subq %rdx,%rcx          # verrataan bittiä lukuun
+    cmovge %rcx,%r13        # jos suurempi tai yhtä suuri, siirretään saatu
+                            # luku rekisteriin r13 talteen
+    cmovge %rdx,%r12        # jos suurempi tai yhtä suuri siirretään bitti 
+                            # rekisteriin r12 talteen
+    irmovq $0,%rbx
+    jge sqrt                # jos suurempi tai yhtäsuuri hypätään seuraavaan aliohjelmaan
+    addq %r8,%rsp           # siirretään osoitinta kaksi eteenpäin, eli bitti
+    addq %r8,%rsp           # pienenee kahdella
+    jmp sqrt_init           # palataan aliohjelman alkuun
+
+# Lasketaan loput iteraatiot, eli määritetään lopullinen res, joka on 
+# neliöjuuren tulos
+sqrt:
+    addq %rbx,%r12          # lisätään bitti resiin
+    rrmovq %r13,%rax        # siirretään luku talteen
+    rrmovq %r12,%rcx        # siirretään res talteen
+    addq %r8,%rsp           # siirretään osoitinta kaksi eteenpäin, eli bitti
+    addq %r8,%rsp           # pienenee kahdella
+    mrmovq (%rsp),%rdx      # siirretään bitti >> 2 rekisteriin rdx
+    andq %rdx,%rdx          # tarkistetaan onko tyhjä bitti
+    je reverse              # jos on, hypätään aliohjelmaan
+    subq %rbx,%rbx          # tyhjennetään rbx, jottei turhaan lisätä bittiä 
+                            # resiin seuraavalla kierroksella
+    addq %rdx,%rcx          # lisätään bitti resiin
+    subq %rcx,%rax          # vähennetään res+bit luvusta
+    cmovge %rax,%r13        # jos suurempi tai nolla, siirretään uusi luku 
+                            # talteen rekisteriin r13
+    cmovge %rdx,%rbx        # siirretään bitti rekisteriin myöhempää lisäystä
+                            # varten
+    rrmovq %r12,%rcx        # siirretään tallennettu res rekisteriin
+    irmovq $0,%r12          # tyhjennetään r12 eli vanha res
+    jmp res                 # hypätään laskemaan uusi res
+
+# Siirretään resin bitteja vasemmalle vertaamalla nykyisestä bitistä yhden 
+# oikealle siirrettyä bittiä resiin ja lisäämällä sen mukaan nykyistä bittiä 
+# rekisteriin r12; esim. jos 8 mahtuu lukuun yhdesti, lisätää rekisteriin 4 jne.
+res:
+    mrmovq -8(%rsp),%rdx    # otetaan nykistä bittiä yhden bitin verran isompi
+                            # bitti rekisteriin rdx 
+    subq %rdx,%rcx          # verrataan sitä resiin
+    cmovl %r12,%rcx         # jos bitti on suurempi kuin res siirretään 0 
+                            # rekisteriin rcx
+    jl sqrt                 # palataan sqrt-aliohjelmaan
+    mrmovq (%rsp),%rdx      # jos suurempi, otetaan nykyinen bitti
+    addq %rdx,%r12          # listätään se rekisteriin r12
+    jmp res                 # ja jatketaan silmukassa
+
+# Aliohjelman osoittimen siirtämiseen takaisin 2^22 bittiin
+# Hypätään kertolaskuun, kun rekisteri rcx on tyhjä, neliöjuureen jos ei ole
+ptr:
+    subq %r8,%rsp           # osoitinta yksi takaisin (eli MSB >> 1)
+    mrmovq (%rsp),%rdx      # bitti muistista rekisteriin
+    irmovq 0x400000,%rbx    # suurin mahdollinen bitti rekisteriin vertailtavaksi
+    subq %rbx,%rdx          # vähennetään suurin bitti nykyisestä bitistä
+    jl ptr                  # jos pienempi, niin toistetaan
+    andq %rcx,%rcx          # tarkastetaan onko rekisteri rcx tyhjä
+    je mltply_init          # jos rcx on tyhjä hypätään kertolaskuun
+    jmp sqrt_init           # muuten siirrytään laskemaan neliöjuuri
+
+# Aliohjelma, johon tullaan neliöjuuren laskun jälkeen
+# Nollataan rekisterit r14 ja rcx, jotta seuraavissa aliohjelmissa liikutaan
+# oikein (ptr:stä siirrytään kertolaskuun ja kertolaskusta siirrytään 
+# tarkastamaan onko saatu luku fibonaccin luku), rekisteri rax nollataan 
+# jottei jää jäämiä
+# Laskin asetetaan rekisteriin rsi uudestaan, jotta kertolasku sujuu
+# Tarkasteltava luku kopioidaan rekisteriin r13
+# Lopuksi hypätään ptr-aliohjelmaan siirtämään osoitin oikean bitin kohdalle
+reverse:
+    irmovq $0,%r14
+    irmovq $0,%rax
+    irmovq $0,%rcx          # tyhjätään rekisteri rcx, jotta seuraavaksi 
+                            # ptr-aliohjelmasta siirrytään kertolaskuun
+    irmovq $22,%rsi
+    rrmovq %r12,%r13
+    jmp ptr
+
+# Aliohjelma, jossa verrataan neliöjuuren ja kertolaskun kautta saatua lukua 
+# "alkuperäiseen" lukuun
+# Jos luku on sama, on se fibonaccin luku ja hypätään fibonacci-aliohjelmaan,
+# jos luku ei ole sama siirrytään luvut-listassa yksi alio ylöspäin ja siirretään
+# se rekisteriin r13 tarkastelua varten
+# Jos rekisteri on tyhjä, on molemmat luvun "versiot" käyty läpi (+4 ja -4),
+# jolloin luku ei ollut fibonaccin luku ja hypätään lopetukseen
+# Jos rekisterissä on luku, on käyty vasta luvun yksi "versio" läpi ja lähdetään
+# käymään toista läpi
+# Rekisteriin rcx asetetaan arvo, jotta ptr-aliohjelma siirtyy neliöjuureen
+compare:
+    mrmovq (%r10),%r13      # viedään muutettu luku rekisteriin
+    subq %rax,%r13          # verrataan neliöjuuren tulokseen kerrottuna itsellään
+    je fibonacci            # jos sama luku, eli tulos nolla, hypätään aliohjelmaan
+    addq %r8,%r10           # siirrytään luvut listässä seuraavaan alkioon
+    mrmovq (%r10),%r13      # siirretään alkio rekisteriin r13
+    andq %r13,%r13          # katsotaan onko rekisteri tyhjö
+    cmovne %r9,%rcx         # jos ei ole, annetaan rcx.lle arvo, jotta ptr-
+                            # aliohjelmasta siirrytään seuraavalla kerralla
+                            # neliöjuureen
+    jne ptr                 # jos ei tyhjä, hypätään ptr-aliohjelmaan siirtämään
+                            # osoitin paikalleen
+    jmp end                 # muuten mennään end-aliohjelmaan lopettamaan koko
+                            # ohjelma
+
+# Tähän aliohjelmaan hypätään, kun fibonaccin luku on löytynyt
+# Siirretään array-listan seuraava alkio tarkasteltavaksi, varmistetaan
+# ettei päättymisehto täyty
+# Asetetaan rax, rcx, rsi ja r14 -rekisterit
+# Varmistetaan, että ollaan luvut-listan 1. alkion kohdalla, tarpeen tullen
+# siirrytään siihen
+fibonacci:
+    addq %r8,%r11           # siirrytään array-listassa seuraavaan alkioon
+    mrmovq (%r11),%r13      # kerrottava luku muistista rekisteriin
+    andq %r13,%r13          # katsotaan onko luku nolla
+    je end                  # jos on, on koko lista käyty läpi ja siirrytään
+                            # lopetukseen
+    rrmovq %r13,%r12        # jos ei, kopioidaan luku rekisteriin r12
+    irmovq $0,%rax          # tyhjennetään rax, jotta seuraavassa kertolaskussa
+                            # rekisterissä ei ole "jämiä"
+    irmovq $0,%rcx          # tyhjätään rekisteri rcx, jotta seuraavaksi 
+                            # ptr-aliohjelmasta siirrytään kertolaskuun
+    irmovq $4,%r14          # asetetaan vakio 4, jotta seuraavasta kertolaskusta
+                            # siirrytään quint-aliohjelmaan ja aliohjelmassa
+                            # plus ja miinus -laskut onnistuvat
+    irmovq $22,%rsi         # asetetaan laskin uudestaa kertolaskulle
+    mrmovq 8(%r10),%rbx     # kurkataan seuraavaa luvut-listan alkiota
+    andq %rbx,%rbx          # katsotaan onko alkio tyhjä
+    jne ptr                 # jos ei ole, ollaan 1. alkion kohdalla ja kaikki ok,
+                            # hypätään ptr-aliohjelmaan
+    subq %r8,%r10           # jos on, ollaan 2. alkion kohdalla, jolloin täytyy
+                            # palata yksi alkio taaksepäin
+    jmp ptr                 # hypätään ptr-aliohjelmaan
+
+# Lopetus aliohjelma
+# Siirtää array-listan viimeisimmän alkion rekisteriin rax ja siirtää pinon 
+# osoitinta yhdellä taaksepäin ret-käskyn toimimisen varmistamiseksi
+# Jos on löydetty ei-fibonaccin luku, palautuu se rax-rekisterissä, jos koko
+# lista on ollut fibonaccin lukuja, on rekisterissä 0
+end:
+    mrmovq (%r11),%rax      # Siirretään viimeisin alkio rax-rekisteriin 
+                            # (joko ei-fibonaccin luku tai 0)
+    subq %r8,%rsp           # Siirretään pino-osoitinta yhdellä taakse
+    ret                     # Palataan mainiin ohjelman lopettamiseksi
+
+# Pino, johon on tallennettu "bitit" 2^0-2^22
+.pos 0x600
+pino:
+
+# Tarkasteltavien lukujen lista
+.pos 0x700
+array:
+
+# Lista johon tallennetaan kaksi muutettua lukua (5*x*x+4 ja 5*x*x-4)
+.pos 0x800
+luvut:

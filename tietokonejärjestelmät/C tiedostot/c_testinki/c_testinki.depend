@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1633983571 source:c:\users\35844\desktop\tietokonejärjestelmät\c tiedostot\c_testinki\main.c
+	<stdio.h>
+	<stdlib.h>
+

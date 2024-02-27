@@ -1,0 +1,102 @@
+main:
+    irmovq pino,%rbp                # pinon alkuosoite 
+    irmovq pino,%rsp                # pinon ylimmän muistipaikan osoite 
+    irmovq $8,%r8                   # kasi
+    irmovq $0,%r9                   # nolla
+    irmovq $1,%r11                  # yksi
+    pushq %r11                      # 1 pinoon
+    irmovq $2,%rdx                 
+    pushq %rdx                      # 2 pinoon
+    irmovq $4,%rdx                 
+    pushq %rdx                      # 4 pinoon
+    pushq %r8                       # 8 pinoon
+    irmovq $16,%rdx                 
+    pushq %rdx                      # 16 pinoon
+    irmovq $32,%rdx                 
+    pushq %rdx                      # 32 pinoon
+    irmovq $64,%rdx                 
+    pushq %rdx                      # 64 pinoon
+    irmovq $128,%rdx                 
+    pushq %rdx                      # 128 pinoon
+    irmovq $256,%rdx                 
+    pushq %rdx                      # 256 pinoon
+    irmovq $512,%rdx                 
+    pushq %rdx                      # 512 pinoon
+    irmovq $1024,%rdx                 
+    pushq %rdx                      # 1024 pinoon
+    irmovq $2048,%rdx                 
+    pushq %rdx                      # 2048 pinoon
+    irmovq $4096,%rdx                
+    pushq %rdx                      # 4096 pinoon
+    irmovq $8192,%rdx                
+    pushq %rdx                      # 8192 pinoon
+    irmovq $16384,%rdx               
+    pushq %rdx                      # 16384 pinoon
+    irmovq $32768,%rdx               
+    pushq %rdx                      # 32768 pinoon
+    irmovq $65536,%rdx
+    pushq %rdx                      # 65536 pinoon
+    call inshift
+    halt
+
+inshift:
+    addq %r8,%rsp           # osoitinta yksi ylös
+    mrmovq (%rsp),%rdx      # sijoitetaan osoittimen arvo rekisteriin
+    rrmovq %r12,%rax        # kopioidaan r12:n arvo raxiin
+    subq %rdx,%rax          # katsotaan onko rax >= rdx
+    cmovge %rax,%r12        # siirretään rax/num talteen, jos nolla tai yli
+    cmovge %rdx,%r13        # 1. res:n arvo muistiin
+    cmovge %rdx,%r14        # osoittimen paikka muistiin
+    jge lasku               # ja hypätään siirtäämään rcx:n/res:n bittejä
+    addq %r8,%rsp           # osoitinta yksi ylös
+    jmp inshift             # palataan inshift:n alkuun
+    #inshftin jälkeen ensimmäinen iteraatio on ikään kuin jo tapahtunut
+
+lasku:
+    mrmovq 16(%rsp),%rdx    # rdx pinosta|bit >>= 2
+    rrmovq %rdx,%r14
+    andq %rdx,%rdx          # tarkistetaan lopetusehto
+    je pois
+    rrmovq %r13,%rcx
+    addq %rdx,%rcx          # rdx += rbx|bit += res
+    subq %rcx,%rax          # rax -= rbx|num -= (bit + res)
+    cmovl %r12,%rax
+    cmovl %r9,%r10
+    jl siirto
+    cmovge %rax,%r12        # siirretään rax talteen
+    cmovge %r14,%r10
+    jmp siirto
+    
+siirto:
+    mrmovq (%rsp),%rdx
+    andq %rdx,%rdx
+    cmove %r10,%r13
+    je osoitin
+    rrmovq %r13,%rcx
+    subq %rdx,%rcx
+    cmovge %rcx,%r13
+    jge siirtojatko
+    cmovl %r13,%rcx
+    addq %r8,%rsp
+    jmp siirto
+    
+siirtojatko:
+    mrmovq 8(%rsp),%rdx
+    addq %rdx,%r10          # resin "globaali" elävä muuttuja
+    jmp siirto
+
+osoitin:
+    subq %r8,%rsp
+    mrmovq (%rsp),%rdx
+    subq %r14,%rdx
+    jl osoitin
+    jmp lasku
+
+pois:
+    subq %r8,%rsp           # osoitinta yksi ylös
+    subq %r8,%rsp           # osoitinta yksi ylös
+    rrmovq %r13,%rcx
+    ret
+
+.pos 0x400
+pino:

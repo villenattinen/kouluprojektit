@@ -1,0 +1,90 @@
+@startuml
+package java.awt {
+   abstract Graphics
+   class Color
+   package event {
+      interface ActionListener
+      class ActionEvent
+   }
+}
+package javax.swing {
+   class JFrame
+   class JPanel
+}
+package oy.tol.tira.draw {
+   abstract Shape {
+      #id: long
+      #xCoordinate: int
+      #yCoordinate: int
+      #width: int
+      #height: int
+      #filled: boolean
+      #lineColor: Color
+      #fillColor: Color
+      #isSelected: boolean
+      +{abstract}draw(graphics: Graphics): void
+   }
+   class Ellipse extends Shape {
+      +draw(graphics: Graphics): void
+   }
+   class Rectangle extends Shape {
+      +draw(graphics: Graphics): void
+   }
+   class Triangle extends Shape {
+      +draw(graphics: Graphics): void
+   }
+   interface ShapesListener {
+      +shapesChanged(): void
+      +exceptionHappened(reason: String): void
+   }
+   class ShapeException
+   class Shapes {
+      -capacity: int
+      -count: int
+      +Shapes(size: int)
+      +setListener(listener: ShapeListener): void
+      +count(): int
+      +capacity(): int
+      +add(shape: Shape): void
+      +removeAll(): void
+      +remove(shape: Shape): void
+      +remove(index: int): void
+      +setSelected(fromArray: int[], selectionState: boolean: void): void 
+      +select(toCompare: Predicate<Shape>): void
+      +draw(graphics: Graphics): void
+      +removeSelected1(): void
+      +removeSelected2(): void
+      +removeSelected3(): void
+      --Implement the red methods below called by blue one--
+      +<color:Blue>removeSelected4(): void</color>
+      -<color:Red>partitionBySelected(): int</color>
+      -<color:Red>removeFrom(index: int): void</color>
+   }
+   note left of Shapes
+      You need to implement only the red methods in Shapes.
+      The rest is just for visualization and needed for relevant
+      functionality of the demo/exercise.
+   end note
+   class ShapeFactory {
+      +{static}createRandomShape(xCoordinate: int, yCoordinate:  int): Shape
+   }
+   Shapes ..> ShapesListener: notifies
+   Shapes *--> "0..*" Shape: shapeArray
+   Shapes .right.> ShapeException: throws
+   class ShapeApp {
+      +{static}main(args: String[]): void
+      -run(): void 
+      +paintComponent(g: Graphics): void
+      +actionPerformed(e: ActionEvent): void
+      +shapesChanged(): void 
+      +exceptionHappened(reason: String): void
+   }
+   ShapeApp .up.> ShapeException: catches
+   JPanel <|-- ShapeApp
+   ShapeApp *--> JFrame: frame
+   ActionListener <|.. ShapeApp
+   ShapesListener <|.. ShapeApp
+   ShapeApp *--> "1" Shapes: shapes
+   ShapeApp ..> ShapeFactory
+}
+@enduml

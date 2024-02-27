@@ -1,0 +1,6 @@
+main:
+	irmovq $1,%rdx
+	addq %rdi,%rax
+	subq %rdx,%rsi
+	jg main
+	halt

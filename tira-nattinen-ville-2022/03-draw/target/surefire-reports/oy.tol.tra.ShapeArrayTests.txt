@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: oy.tol.tra.ShapeArrayTests
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.699 s - in oy.tol.tra.ShapeArrayTests

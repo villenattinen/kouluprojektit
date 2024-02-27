@@ -1,0 +1,76 @@
+# Created at 2022-12-08T21:03:44.566
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+
+
+# Created at 2022-12-08T21:04:02.189
+Unexpected IOException with stream: Handling the large invoices & payments files took 183147 ms
+
+
+# Created at 2022-12-08T21:04:02.216
+Unexpected IOException with stream: 
+Hash is 8f640c2a633c7c62fb2e5425f0999593eef8e3d6
+
+
+# Created at 2022-12-08T21:04:02.216
+Unexpected IOException: 6,1,oy.tol.tra.InvoicesPaymentsLargeTests,newInvoicesFromPaymentsSlowTest,null,null,null
+
+
+# Created at 2022-12-08T21:04:02.216
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,oy.tol.tra.InvoicesPaymentsLargeTests,null,null,null
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException: 1,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,oy.tol.tra.InvoicesPaymentsSmallTests,null,null,null
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException: 5,1,oy.tol.tra.InvoicesPaymentsSmallTests,newInvoicesFromPaymentsFastTest,null,null,null
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException with stream: Handling fast the small invoices & payments files took 0 ms
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException with stream: 
+Hash is da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException with stream: Correct has is: cfb6ef9f00737b6393b9f66b49528c88dc248ffe
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException: 8,1,oy.tol.tra.InvoicesPaymentsSmallTests,newInvoicesFromPaymentsFastTest,null,Wrong hash code for the file. ==> expected: <true> but was: <false>,null,Wrong hash code for the file. ==> expected: <true> but was: <false>,InvoicesPaymentsSmallTests.newInvoicesFromPaymentsFastTest:49 Wrong hash code for the file. ==> expected: <true> but was: <false>,org.opentest4j.AssertionFailedError: Wrong hash code for the file. ==> expected: <true> but was: <false>\000A\0009at oy.tol.tra.InvoicesPaymentsSmallTests.newInvoicesFromPaymentsFastTest(InvoicesPaymentsSmallTests.java:49)\000A
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException: 5,1,oy.tol.tra.InvoicesPaymentsSmallTests,newInvoicesFromPaymentsSlowTest,null,null,null
+
+
+# Created at 2022-12-08T21:04:02.232
+Unexpected IOException with stream: Starting to handle the invoices the slow way...
+
+
+# Created at 2022-12-08T21:04:02.248
+Unexpected IOException with stream: Handling slowly the small invoices & payments files took 0.2197 ms
+
+
+# Created at 2022-12-08T21:04:02.248
+Unexpected IOException with stream: 
+Hash is cfb6ef9f00737b6393b9f66b49528c88dc248ffe
+
+
+# Created at 2022-12-08T21:04:02.248
+Unexpected IOException: 6,1,oy.tol.tra.InvoicesPaymentsSmallTests,newInvoicesFromPaymentsSlowTest,null,null,null
+
+
+# Created at 2022-12-08T21:04:02.248
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,oy.tol.tra.InvoicesPaymentsSmallTests,null,null,null
+
+

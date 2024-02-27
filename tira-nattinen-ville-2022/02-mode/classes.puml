@@ -1,0 +1,26 @@
+@startuml 02-mode
+package oy.tol.tra {
+  class ModeTests
+  class ModeStringTests
+  class BasicTests
+  ModeTests ..> Algorithms : tests
+  ModeStringTests ..> Algorithms: tests
+  BasicTests ..> Algorithms: tests
+  class Algorithms {
+    +{static} <T extends Comparable<T>> void sort(T [] array)
+    +{static} <T> void reverse(T [] array)
+    +{static} <T> void swap(T [] array, int first, int second)
+    +<color:Red>{static} <T extends Comparable<T>> findMode(array : T []) : ModeSearchResult<T></color>
+  }
+  class ModeSearchResult<T> {
+      +theMode : T
+      +count: int
+  }
+  Algorithms +-- ModeSearchResult
+  class ModeSearchResult #pink;line:red
+  note bottom of Algorithms
+    <b>Implement findMode()</b> to Algorithms.java.
+    Utilize Algorithms.sort from previous exercise!
+  end note 
+}
+@enduml

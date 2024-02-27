@@ -1,0 +1,115 @@
+main:
+    irmovq pino,%rbp                # pinon alkuosoite 
+    irmovq pino,%rsp                # pinon ylimmän muistipaikan osoite 
+    irmovq $8,%r8                   # kasi
+    irmovq $1,%rdi
+    irmovq $32,%rsi                 # bittien lkm, laskin kerrottavalle   
+    irmovq 0x1,%rdx                  
+    pushq %rdx                      # 2^0 pinoon
+    irmovq 0x2,%rdx                 
+    pushq %rdx                      # 2^1 pinoon
+    irmovq 0x4,%rdx                 
+    pushq %rdx                      # 2^2 pinoon
+    irmovq 0x8,%rdx                 
+    pushq %rdx                      # 2^3 pinoon
+    irmovq 0x10,%rdx                 
+    pushq %rdx                      # 2^4 pinoon
+    irmovq 0x20,%rdx                 
+    pushq %rdx                      # 2^5 pinoon
+    irmovq 0x40,%rdx                 
+    pushq %rdx                      # 2^6 pinoon
+    irmovq 0x80,%rdx                 
+    pushq %rdx                      # 2^7 pinoon
+    irmovq 0x100,%rdx                 
+    pushq %rdx                      # 2^8 pinoon
+    irmovq 0x200,%rdx                 
+    pushq %rdx                      # 2^9 pinoon
+    irmovq 0x400,%rdx                 
+    pushq %rdx                      # 2^10 pinoon
+    irmovq 0x800,%rdx                 
+    pushq %rdx                      # 2^11 pinoon
+    irmovq 0x1000,%rdx                
+    pushq %rdx                      # 2^12 pinoon
+    irmovq 0x2000,%rdx                
+    pushq %rdx                      # 2^13 pinoon
+    irmovq 0x4000,%rdx               
+    pushq %rdx                      # 2^14 pinoon
+    irmovq 0x8000,%rdx               
+    pushq %rdx                      # 2^15 pinoon
+    irmovq 0x10000,%rdx
+    pushq %rdx                      # 2^16 pinoon
+    irmovq 0x20000,%rdx
+    pushq %rdx                      # 2^17 pinoon
+    irmovq 0x40000,%rdx
+    pushq %rdx                      # 2^18 pinoon
+    irmovq 0x80000,%rdx
+    pushq %rdx                      # 2^19 pinoon
+    irmovq 0x100000,%rdx
+    pushq %rdx                      # 2^20 pinoon
+    irmovq 0x200000,%rdx
+    pushq %rdx                      # 2^21 pinoon
+    irmovq 0x400000,%rdx
+    pushq %rdx                      # 2^22 pinoon
+    irmovq 0x800000,%rdx
+    pushq %rdx                      # 2^23 pinoon
+    irmovq 0x1000000,%rdx
+    pushq %rdx                      # 2^24 pinoon
+    irmovq 0x2000000,%rdx
+    pushq %rdx                      # 2^25 pinoon
+    irmovq 0x4000000,%rdx
+    pushq %rdx                      # 2^26 pinoon
+    irmovq 0x8000000,%rdx
+    pushq %rdx                      # 2^27 pinoon
+    irmovq 0x10000000,%rdx
+    pushq %rdx                      # 2^28 pinoon
+    irmovq 0x20000000,%rdx
+    pushq %rdx                      # 2^29 pinoon
+    irmovq 0x40000000,%rdx
+    pushq %rdx                      # 2^30 pinoon
+    irmovq 0x80000000,%rdx
+    pushq %rdx                      # 2^31 pinoon
+    irmovq 0x100000000,%rdx
+    pushq %rdx                      # 2^32 pinoon
+    call init
+    halt
+
+init:             # periaatteesa turha, lo. osoittimen ensimmäistä siirtoa                  
+    addq %r8,%rsp                   # osoitinta yksi ylös
+    rrmovq %r11,%rbx                # verrataan lukuja, määritetään
+    rrmovq %r12,%rcx                # pienempi kertojaksi
+    subq %r11,%r12
+    cmovge %rbx,%r11    
+    cmovge %rcx,%r12
+    cmovl %rbx,%r12
+    cmovl %rcx,%r11
+    jmp kertoja
+
+kertoja:
+    mrmovq (%rsp),%rdx
+    rrmovq %r11,%rbx
+    rrmovq %rsi,%r13        # laskin sisempään laskimeen
+    addq %rdi,%r13
+    subq %rdx,%rbx
+    cmovge %rbx,%r11
+    cmovge %r12,%rcx
+    jge loop
+    addq %r8,%rsp           # osoitinta yksi ylös
+    subq %rdi,%rsi          # määritetään laskin bittien siirtoon, max siirto 32; joka kierros -= 1
+    jge kertoja
+    subq %r8,%rsp           # osoitinta yksi ylös
+    ret
+
+
+loop:
+    subq %rdi,%r13      #sisempi laskin -= 1
+    jle lisays
+    addq %rcx,%rcx
+    jmp loop
+
+lisays:
+    addq %rcx,%rax
+    jmp kertoja
+    
+
+.pos 0x800
+pino:

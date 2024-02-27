@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1633986451 source:c:\users\35844\desktop\tietokonejärjestelmät\c tiedostot\tietorakenteet\main.c
+	<stdio.h>
+	<stdlib.h>
+	<inttypes.h>
+	<string.h>
+	<math.h>
+
+1633942293 source:c:\users\35844\desktop\tietokonejärjestelmät\c tiedostot\tietorakenteet\linkedlist.c
+	<stdio.h>
+	<stdlib.h>
+

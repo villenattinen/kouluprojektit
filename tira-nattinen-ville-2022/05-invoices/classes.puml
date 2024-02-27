@@ -1,0 +1,69 @@
+@startuml
+package oy.tol.tra {  
+  class Invoice {
+    -number: Integer
+    -sum: Integer
+    -dueDate: Date
+  }
+  class Payment {
+    -number: Integer 
+    -sum: Integer 
+  }
+  Invoice ..|> java.lang.Comparable
+  Invoice --|> java.lang.Object
+  Payment ..|> java.lang.Comparable
+  Payment --|> java.lang.Object
+
+  class InvoiceInspector {
+    +handleInvoicesAndPaymentsSlow() : void
+    +<color:Red>handleInvoicesAndPaymentsFast() : void</color>
+  }
+  note left of InvoiceInspector::handleInvoicesAndPaymentsFast 
+    Design and implement handleInvoicesAndPaymentsFast so that it is
+    <b>faster</b> than the slow algorithm.
+  end note
+  InvoiceInspector *-- "*" Invoice : inspects
+  InvoiceInspector *-- "*" Payment : inspects
+  class Algorithms {
+    +{static}<T extends Comparable<T>> sort(array: T []) : void
+    +{static}<T extends Comparable<T>> binarySearch(item : T, array : T [], fromIndex: int, toIndex: int): int 
+    +<color:Red>{static}<T extends Comparable<T>> fastSort(item : T, array : T [], fromIndex: int, toIndex: int): int</color> 
+  }
+  note top of Algorithms
+     Implement a faster sorting algorithm in the
+     Algorithms class! Typical choices would be Quicksort,
+     Heapsort or Merge sort, counting and radix sorts do fine too.
+  end note
+  InvoiceInspector ..> Algorithms : uses
+  InvoicesPaymentsLargeTests ..> InvoiceInspector : tests 
+  InvoicesPaymentsSmallTests ..> InvoiceInspector : tests 
+  note top of InvoicesPaymentsSmallTests
+    First test correctness of your fast algorithm implementation with small tests.
+    When it works, then test the time complexity using large tests.
+  end note
+
+  package input {
+    entity invoices.txt <<file>>
+    entity payments.txt <<file>>
+    entity l-invoices.txt <<file>>
+    entity l.payments.txt <<file>>
+  }
+  package output {
+    entity to-collect.txt <<file>>
+    entity l-to-collect.txt <<file>>
+    entity to-collect-slow.txt <<file>>
+    entity l-to-collect-slow.txt <<file>>
+  }
+  InvoicesPaymentsLargeTests ..> input : reads
+  InvoicesPaymentsSmallTests ..> input : reads 
+  InvoiceInspector ..> output : produces
+}
+package java.lang {
+  interface Comparable<T> {
+    +compareTo(o: T) int 
+  }
+  abstract Object {
+    +equals(o: Object): boolean
+  }
+}
+@enduml

@@ -1,0 +1,124 @@
+# Created at 2023-01-15T19:50:26.420
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+
+
+# Created at 2023-01-15T19:50:34.637
+Unexpected IOException with stream: Hash table reallocated 18 times
+Hash table fill factor was 0.8
+Hash table fill rate is 59,60%
+Hash table had 2992677 collisions when filling the hash table
+Hash table had to probe 26 times in the worst case
+
+
+
+# Created at 2023-01-15T19:50:34.645
+Unexpected IOException: 6,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithHashTable,null,null,null
+
+
+# Created at 2023-01-15T19:50:34.645
+Unexpected IOException: 5,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithBST,null,null,null
+
+
+# Created at 2023-01-15T19:50:34.645
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook village.txt
+
+
+# Created at 2023-01-15T19:50:34.653
+Unexpected IOException with stream: Binary search tree has a max depth of 13
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T19:50:34.653
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook small-town.txt
+
+
+# Created at 2023-01-15T19:50:34.680
+Unexpected IOException with stream: Binary search tree has a max depth of 21
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T19:50:34.680
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook town.txt
+
+
+# Created at 2023-01-15T19:50:34.697
+Unexpected IOException with stream: Binary search tree has a max depth of 33
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T19:50:34.698
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook large-town.txt
+
+
+# Created at 2023-01-15T19:50:34.803
+Unexpected IOException with stream: Binary search tree has a max depth of 37
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T19:50:34.811
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook city.txt
+
+
+# Created at 2023-01-15T19:50:35.069
+Unexpected IOException with stream: Binary search tree has a max depth of 42
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-15T19:50:35.077
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook large-city.txt
+
+
+# Created at 2023-01-15T19:50:36.031
+Unexpected IOException with stream: Binary search tree has a max depth of 45
+Binary search tree's longest collision chain was 1
+
+
+
+# Created at 2023-01-15T19:50:36.038
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook metropolis.txt
+
+
+# Created at 2023-01-15T19:50:38.570
+Unexpected IOException with stream: Binary search tree has a max depth of 50
+Binary search tree's longest collision chain was 1
+
+
+
+# Created at 2023-01-15T19:50:38.570
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook capital.txt
+
+
+# Created at 2023-01-15T19:50:43.432
+Unexpected IOException with stream: Binary search tree has a max depth of 53
+Binary search tree's longest collision chain was 1
+
+
+
+# Created at 2023-01-15T19:50:43.432
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook megalopolis.txt
+
+
+# Created at 2023-01-15T19:50:56.790
+Unexpected IOException with stream: Binary search tree has a max depth of 56
+Binary search tree's longest collision chain was 2
+
+
+
+# Created at 2023-01-15T19:50:56.800
+Unexpected IOException: 6,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithBST,null,null,null
+
+
+# Created at 2023-01-15T19:50:56.810
+Unexpected IOException: 2,1,org.apache.maven.surefire.junitplatform.JUnitPlatformProvider,oy.tol.tra.PerformanceTests,null,null,null
+
+

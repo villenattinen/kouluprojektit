@@ -1,0 +1,123 @@
+# Created at 2023-01-14T12:26:28.381
+TestSet has not finished before stream error has appeared >> initializing exit by non-null configuration: null
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readInt(DataInputStream.java:398)
+	at org.apache.maven.surefire.booter.MasterProcessCommand.decode(MasterProcessCommand.java:115)
+	at org.apache.maven.surefire.booter.CommandReader$CommandRunnable.run(CommandReader.java:391)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+
+
+# Created at 2023-01-14T12:26:30.479
+Unexpected IOException with stream: Hash table reallocated 28 times
+Hash table fill factor was 0.65
+Hash table fill rate is 61,02%
+Hash table had 9913864 collisions when filling the hash table
+Hash table had to probe 1242 times in the worst case
+
+
+
+# Created at 2023-01-14T12:26:30.482
+Unexpected IOException with stream: ==> Starting to analyse Hashtable phonebook megalopolis.txt
+
+
+# Created at 2023-01-14T12:27:00.181
+Unexpected IOException with stream: Hash table reallocated 30 times
+Hash table fill factor was 0.65
+Hash table fill rate is 64,45%
+Hash table had 67152633 collisions when filling the hash table
+Hash table had to probe 4093 times in the worst case
+
+
+
+# Created at 2023-01-14T12:27:00.219
+Unexpected IOException: 6,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithHashTable,null,null,null
+
+
+# Created at 2023-01-14T12:27:00.221
+Unexpected IOException: 5,1,oy.tol.tra.PerformanceTests,handleReadTestFilesWithBST,null,null,null
+
+
+# Created at 2023-01-14T12:27:00.221
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook village.txt
+
+
+# Created at 2023-01-14T12:27:00.231
+Unexpected IOException with stream: Binary search tree has a max depth of 12
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-14T12:27:00.231
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook small-town.txt
+
+
+# Created at 2023-01-14T12:27:00.251
+Unexpected IOException with stream: Binary search tree has a max depth of 21
+Binary search tree's longest collision chain was 0
+
+
+
+# Created at 2023-01-14T12:27:00.261
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook town.txt
+
+
+# Created at 2023-01-14T12:27:00.382
+Unexpected IOException with stream: Binary search tree has a max depth of 31
+Binary search tree's longest collision chain was 4
+
+
+
+# Created at 2023-01-14T12:27:00.390
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook large-town.txt
+
+
+# Created at 2023-01-14T12:27:00.734
+Unexpected IOException with stream: Binary search tree has a max depth of 39
+Binary search tree's longest collision chain was 13
+
+
+
+# Created at 2023-01-14T12:27:00.734
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook city.txt
+
+
+# Created at 2023-01-14T12:27:00.987
+Unexpected IOException with stream: Binary search tree has a max depth of 43
+Binary search tree's longest collision chain was 20
+
+
+
+# Created at 2023-01-14T12:27:00.987
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook large-city.txt
+
+
+# Created at 2023-01-14T12:27:02.609
+Unexpected IOException with stream: Binary search tree has a max depth of 125
+Binary search tree's longest collision chain was 98
+
+
+
+# Created at 2023-01-14T12:27:02.610
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook metropolis.txt
+
+
+# Created at 2023-01-14T12:27:05.991
+Unexpected IOException with stream: Binary search tree has a max depth of 225
+Binary search tree's longest collision chain was 202
+
+
+
+# Created at 2023-01-14T12:27:05.991
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook capital.txt
+
+
+# Created at 2023-01-14T12:27:16.156
+Unexpected IOException with stream: Binary search tree has a max depth of 410
+Binary search tree's longest collision chain was 381
+
+
+
+# Created at 2023-01-14T12:27:16.156
+Unexpected IOException with stream: ==> Starting to analyse BST phonebook megalopolis.txt
+
+
